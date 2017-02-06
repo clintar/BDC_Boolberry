@@ -440,13 +440,13 @@ namespace nodetool
 	  if (!rsp.local_peerlist.empty())
 	  {
 		  std::list<peerlist_entry> old_type_peers;
-		  BOOST_FOREACH(const peerlist_entry_old& be, rsp.local_peerlist)
+		  BOOST_FOREACH(const peerlist_entry& be, rsp.local_peerlist)
 		  {
 			  peerlist_entry ple;
 			  ple.adr = be.adr;
 			  ple.id = be.id;
 			  ple.last_seen = be.last_seen;
-			  ple.version = "Unknown";
+//			  ple.version = "Unknown";
 			  old_type_peers.push_back(ple);
 		  }
 		  if (!handle_remote_peerlist(old_type_peers, rsp.node_data.local_time, context))
@@ -455,12 +455,6 @@ namespace nodetool
 			  add_ip_fail(context.m_remote_ip);
 			  return;
 		  }
-	  }
-	  else if (!rsp.local_peerlist_w_version.empty() && !handle_remote_peerlist(rsp.local_peerlist_w_version, rsp.node_data.local_time, context))
-	  {
-		  LOG_ERROR_CCONTEXT("COMMAND_HANDSHAKE: failed to handle_remote_peerlist(...), closing connection.");
-		  add_ip_fail(context.m_remote_ip);
-		  return;
 	  }
 
       hsh_result = true;
@@ -540,13 +534,13 @@ namespace nodetool
 	  if (!rsp.local_peerlist.empty())
 	  {
 		  std::list<peerlist_entry> old_type_peers;
-		  BOOST_FOREACH(const peerlist_entry_old& be, rsp.local_peerlist)
+		  BOOST_FOREACH(const peerlist_entry& be, rsp.local_peerlist)
 		  {
 			  peerlist_entry ple;
 			  ple.adr = be.adr;
 			  ple.id = be.id;
 			  ple.last_seen = be.last_seen;
-			  ple.version = "Unknown";
+//			  ple.version = "Unknown";
 			  old_type_peers.push_back(ple);
 		  }
 		  if (!handle_remote_peerlist(old_type_peers, rsp.local_time, context))
@@ -555,12 +549,6 @@ namespace nodetool
 			  add_ip_fail(context.m_remote_ip);
 			  return;
 		  }
-	  }
-	  else if (!rsp.local_peerlist_w_version.empty() && !handle_remote_peerlist(rsp.local_peerlist_w_version, rsp.local_time, context))
-	  {
-		  LOG_ERROR_CCONTEXT("COMMAND_HANDSHAKE: failed to handle_remote_peerlist(...), closing connection.");
-		  add_ip_fail(context.m_remote_ip);
-		  return;
 	  }
 
 	  if (!context.m_is_income){
@@ -1200,7 +1188,7 @@ namespace nodetool
     //fill response
 	rsp.version = PROJECT_VERSION_LONG;
     rsp.local_time = time(NULL);
-	m_peerlist.get_peerlist_head(rsp.local_peerlist_w_version);
+	m_peerlist.get_peerlist_head(rsp.local_peerlist);
     m_payload_handler.get_payload_sync_data(rsp.payload_data);
     fill_maintainers_entry(rsp.maintrs_entry);
     LOG_PRINT_CCONTEXT_L2("COMMAND_TIMED_SYNC");
@@ -1269,7 +1257,7 @@ namespace nodetool
 
     //fill response
 	rsp.version = PROJECT_VERSION_LONG;
-	m_peerlist.get_peerlist_head(rsp.local_peerlist_w_version);
+	m_peerlist.get_peerlist_head(rsp.local_peerlist);
     get_local_node_data(rsp.node_data);
     m_payload_handler.get_payload_sync_data(rsp.payload_data);
     fill_maintainers_entry(rsp.maintrs_entry);

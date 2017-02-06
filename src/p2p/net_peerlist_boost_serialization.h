@@ -23,7 +23,7 @@ namespace boost
       a & pl.adr;
       a & pl.id;
       a & pl.last_seen;
-	  a & pl.version;
+//	  a & pl.version;
     }    
   }
 }

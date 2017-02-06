@@ -296,7 +296,7 @@ namespace nodetool
     ple.adr = addr;
     ple.id = peer;
     ple.last_seen = time(NULL);
-	ple.version = vers;
+//	ple.version = vers;
     return append_with_peer_white(ple);
     CATCH_ENTRY_L0("peerlist_manager::set_peer_just_seen()", false);
   }
